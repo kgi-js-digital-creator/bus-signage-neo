@@ -25,7 +25,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="flex flex-col cursor-none! select-none w-screen h-screen bg-neutral-900 text-neutral-50 antialiased">
+    <div className="flex flex-col cursor-none! select-none w-full h-full bg-neutral-900 text-neutral-50 antialiased">
       <HashRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />
