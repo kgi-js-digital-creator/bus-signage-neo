@@ -78,9 +78,9 @@ export default function Timetable({ now, id, data }: { now: Date, id: string; da
       <div className="relative flex flex-col flex-1 px-2 min-h-0 items-center overflow-hidden">
         <div className="flex flex-row items-center shrink-0 w-full gap-4 py-1">
           <div className="flex text-[2rem] text-center font-medium text-neutral-200">{stopName}</div>
-          <div className="flex flex-col justify-end h-full font-medium text-neutral-300">
-            <div className="text-[0.8rem]">{lineName}</div>
-            <div className="text-base">{routeName}</div>
+          <div className={`flex flex-col h-8 font-medium text-neutral-300 gap-1 ${lineName && routeName ? "justify-center" : "justify-end"}`}>
+            <div className="text-[0.8rem] leading-none">{lineName}</div>
+            <div className="text-base leading-none">{routeName}</div>
           </div>
         </div>
         <div className="flex flex-1 w-full flex-col min-h-0 overflow-hidden">
