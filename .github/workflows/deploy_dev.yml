@@ -7,6 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE: /bus-signage-neo/
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
