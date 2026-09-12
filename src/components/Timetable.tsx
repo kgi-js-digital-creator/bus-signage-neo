@@ -25,13 +25,15 @@ function remainingMinutes(timeNumber: string | number, nowTime: number) {
   return targetMinutes - nowMinutes;
 }
 
-export default function Timetable({ now, id, data }: { now: Date, id: string; data: Body }) {
+export default function Timetable({ id, data }: { id: string; data: Body }) {
   const [currentTime, setCurrentTime] = useState<number>(() => {
+    const now = new Date();
     return now.getHours() * 100 + now.getMinutes();
   });
 
   useEffect(() => {
     const timer = setInterval(() => {
+      const now = new Date();
       setCurrentTime(now.getHours() * 100 + now.getMinutes());
     }, 500);
 

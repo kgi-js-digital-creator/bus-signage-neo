@@ -5,7 +5,6 @@ import mergeJson from "./mergeJson";
 async function fetchData(
   todayType: string,
   type: "pub" | "sch" | "sch_temp",
-  now: Date,
 ): Promise<Body> {
   let status = "500";
   let statusMessage = "Internal Server Error";
@@ -14,6 +13,7 @@ async function fetchData(
   const baseURL = `${atob(d["2A"])}${atob("P3Rva2VuPQ==")}${atob(d["2B"])}`;
   let requestURL: string;
   if (type === "sch_temp") {
+    const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1; // 月は0から始まるため+1する
     const day = now.getDate();
@@ -55,12 +55,12 @@ async function fetchData(
   return mergeJson([statusData, timetable]) as Body;
 }
 
-export default async function timetableData(now: Date): Promise<Body> {
-  const todayType = await getTodayType(now);
+export default async function timetableData(): Promise<Body> {
+  const todayType = await getTodayType();
   const [publicData, schoolTempData, schoolData] = await Promise.all([
-    fetchData(todayType, "pub", now),
-    fetchData(todayType, "sch_temp", now),
-    fetchData(todayType, "sch", now),
+    fetchData(todayType, "pub"),
+    fetchData(todayType, "sch_temp"),
+    fetchData(todayType, "sch"),
   ]);
   const returnData = schoolTempData.metadata.statuses.school.status === "200"
     ? mergeJson([publicData, schoolTempData]) as Body

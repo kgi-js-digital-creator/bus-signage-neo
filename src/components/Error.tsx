@@ -1,8 +1,6 @@
 import { useState } from "react";
 import type { ErrorInfo } from "react";
 
-import useTime from "../hooks/useTime";
-
 
 export interface ErrorProps {
   error?: Error | unknown;
@@ -10,7 +8,7 @@ export interface ErrorProps {
 }
 
 export default function ErrorComponent({ error, errorInfo }: ErrorProps) {
-  const { now } = useTime();
+  const now = new Date();
 
   const [ariseTime] = useState(() => now.toLocaleString("ja-JP", {
     month: "2-digit",

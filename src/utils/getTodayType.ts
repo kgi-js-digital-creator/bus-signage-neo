@@ -3,7 +3,8 @@ type SyukujitsuResponse = {
   body: Record<string, string>;
 };
 
-export default async function getTodayType(now: Date): Promise<"week" | "sat" | "holi"> {
+export default async function getTodayType(): Promise<"week" | "sat" | "holi"> {
+  const now = new Date();
   const yyyy = now.getFullYear();
   const mm = String(now.getMonth() + 1).padStart(2, "0");
   const dd = String(now.getDate()).padStart(2, "0");

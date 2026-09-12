@@ -7,17 +7,17 @@ import Load from "./components/Load.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Home from "./pages/Home";
 import timetableData from "./utils/timetableData.ts";
-import useTime from "./hooks/useTime.tsx";
 
 
 export default function App() {
-  const { now } = useTime()
   const [timetable, setTimetable] = useState<Body>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
+
+
   useEffect(() => {
     const init = async () => {
-      const data = await timetableData(now);
+      const data = await timetableData();
       setTimetable(data);
       setIsLoading(false);
     }
@@ -29,19 +29,19 @@ export default function App() {
       <HashRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Home now={now} timetable={timetable} isLoading={isLoading} />} />
-          <Route path="/:id" element={<TimetablePage now={now} timetable={timetable} isLoading={isLoading} />} />
+          <Route path="/" element={<Home timetable={timetable} isLoading={isLoading} />} />
+          <Route path="/:id" element={<TimetablePage timetable={timetable} isLoading={isLoading} />} />
         </Routes>
       </HashRouter>
     </div>
   )
 }
 
-function TimetablePage({ now, timetable, isLoading }: { now: Date, timetable?: Body, isLoading: boolean }) {
+function TimetablePage({ timetable, isLoading }: { timetable?: Body, isLoading: boolean }) {
   const { id } = useParams<{ id: string }>();
   return (
     <>
-      {isLoading || !timetable || !id ? <Load /> : <Timetable now={now} id={id} data={timetable} />}
+      {isLoading || !timetable || !id ? <Load /> : <Timetable id={id} data={timetable} />}
     </>
   )
 }
