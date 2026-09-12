@@ -5,12 +5,6 @@ import { GlobeOff } from "lucide-react";
 const checkInterval = 5 * 60 * 1000;
 
 export function GlobalController({ children }: { children: React.ReactNode }) {
-  const now = new Date()
-  const yyyy = now.getFullYear();
-  const mm = String(now.getMonth() + 1).padStart(2, "0");
-  const dd = String(now.getDate()).padStart(2, "0");
-  const todayDateStr = `${yyyy}-${mm}-${dd}`;
-
   const [status, setStatus] = useState<boolean>(true);
   const [statusMessage, setStatusMessage] = useState<string>("");
   const [statusCode, setStatusCode] = useState<number>(0);
@@ -49,7 +43,10 @@ export function GlobalController({ children }: { children: React.ReactNode }) {
       const h = now.getHours();
 
       if (h === 0 || h === 4) {
-        const reloadId = `${todayDateStr}-${h}`;
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, "0");
+        const dd = String(now.getDate()).padStart(2, "0");
+        const reloadId = `${yyyy}-${mm}-${dd}-${h}`;
         const currentUrl = new URL(window.location.href);
         const lastReloadId = currentUrl.searchParams.get("lastReload");
 
