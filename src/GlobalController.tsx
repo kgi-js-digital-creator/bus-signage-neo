@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { statusCheck } from "./utils/checkStatus";
 import { GlobeOff } from "lucide-react";
 
-const checkInterval = 5 * 60 * 1000;
+const checkInterval = 10 * 60 * 1000;
 
 export function GlobalController({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<boolean>(true);
