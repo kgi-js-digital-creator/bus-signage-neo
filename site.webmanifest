@@ -31,17 +31,6 @@
       ]
     },
     {
-      "name": "京王八王子駅行",
-      "url": "./#/keio-hachioji",
-      "icons": [
-        {
-          "src": "./web-app-manifest-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
       "name": "南大沢行",
       "url": "./#/minamiosawa",
       "icons": [
@@ -55,6 +44,17 @@
     {
       "name": "拝島行",
       "url": "./#/haijima",
+      "icons": [
+        {
+          "src": "./web-app-manifest-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "京王八王子駅行",
+      "url": "./#/keio-hachioji",
       "icons": [
         {
           "src": "./web-app-manifest-192x192.png",
