@@ -3,7 +3,7 @@
   "short_name": "時刻表",
   "start_url": "./",
   "scope": "./",
-  "orientation": "landscape",
+  "orientation": "any",
   "icons": [
     {
       "src": "./web-app-manifest-192x192.png",
