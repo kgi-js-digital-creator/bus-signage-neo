@@ -8,10 +8,11 @@ const loggedInvalidTimes = new Set<string>();
 
 function remainingMinutes(timeNumber: string | number, nowTime: number) {
   const time = String(timeNumber);
-  if (time.length < 4) {
+  const testRegex = /^\d{4}$/;
+  if (time.length != 4 || !testRegex.test(time)) {
     if (!loggedInvalidTimes.has(time)) {
       loggedInvalidTimes.add(time);
-      console.log(`時刻データが4桁未満のため無視されました: ${timeNumber}`);
+      console.log(`時刻データが不正です: ${timeNumber}\nデータは４桁の整数値である必要があります。`);
     }
     return null;
   }
