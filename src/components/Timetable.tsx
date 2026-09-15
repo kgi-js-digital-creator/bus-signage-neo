@@ -21,21 +21,20 @@ function remainingMinutes(timeNumber: string | number, nowTime: number) {
   const m = Number(time.slice(2));
 
   const targetMinutes = h * 60 + m;
-  const nowMinutes = Math.floor(nowTime / 100) * 60 + (nowTime % 100);
 
-  return targetMinutes - nowMinutes;
+  return targetMinutes - nowTime;
 }
 
 export default function Timetable({ id, data }: { id: string; data: Body }) {
   const [currentTime, setCurrentTime] = useState<number>(() => {
     const now = new Date();
-    return now.getHours() * 100 + now.getMinutes();
+    return now.getHours() * 60 + now.getMinutes();
   });
 
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
-      setCurrentTime(now.getHours() * 100 + now.getMinutes());
+      setCurrentTime(now.getHours() * 60 + now.getMinutes());
     }, 500);
 
     return () => clearInterval(timer);
