@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import type { Body } from "../types/ResponseJson";
 import Description from "../components/Description";
@@ -9,11 +9,17 @@ import Load from "../components/Load";
 
 export default function Home({ timetable, isLoading }: { timetable?: Body, isLoading: boolean }) {
   const [now, setNow] = useState(new Date());
+  
   useEffect(() => {
-    const timer = setInterval(() => {
-      setNow(new Date());
-    }, 500);
-    return () => clearInterval(timer);
+	  let timerId: ReturnType<typeof setTimeout>;
+
+    function updateNow() {
+      const currentTime = new Date();
+      setNow(currentTime);
+      timerId = setTimeout(updateNow, 1000 - (currentTime.getMilliseconds()));
+    }
+    updateNow();
+    return () => clearTimeout(timerId);
   }, []);
   return (
     <>
