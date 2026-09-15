@@ -1,62 +1,45 @@
-name: Deploy gh-pages
+name: Deploy development gh-pages
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
 jobs:
   build:
-    runs-on: ubuntu-latest
-    env:
+    uses: ./.github/workflows/build.yml
+    with:
       BASE: /bus-signage-neo/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - name: Create xWER4
-        env:
-          ENV_1A: ${{ vars.ENV_1A }}
-          ENV_2A: ${{ vars.ENV_2A }}
-          ENV_2B: ${{ vars.ENV_2B }}
-          ENV_3A: ${{ vars.ENV_3A }}
-          ENV_3B: ${{ vars.ENV_3B }}
-        run: |
-          jq -cn \
-            --arg v1a "$(printf '%s' "$ENV_1A" | base64 -w 0)" \
-            --arg v2a "$(printf '%s' "$ENV_2A" | base64 -w 0)" \
-            --arg v2b "$(printf '%s' "$ENV_2B" | base64 -w 0)" \
-            --arg v3a "$(printf '%s' "$ENV_3A" | base64 -w 0)" \
-            --arg v3b "$(printf '%s' "$ENV_3B" | base64 -w 0)" \
-            '{
-              "1A": $v1a,
-              "2A": $v2a,
-              "2B": $v2b,
-              "3A": $v3a,
-              "3B": $v3b
-            }' |
-            base64 -w 0 > dist/xWER4
+        uses: actions/checkout@v7
+        with:
+          ref: gh-pages
+          fetch-depth: 1
+      - name: Cleanup gh-pages
+        run: find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+      - name: Download dist
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
       - name: Generate ISO 8601 timestamp
         id: timestamp
         run: echo "time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
-      - name: Deploy to artifact branch
+      - name: Deploy to gh-pages branch
         run: |
-          cp -r dist /tmp/dist
-          git fetch origin gh-pages:gh-pages || true
-          if git show-ref --verify --quiet refs/heads/gh-pages; then
-            git checkout gh-pages
-          else
-            git checkout -b gh-pages
-          fi
-          git rm -rf . || true
-          git clean -fdx
-          cp -r /tmp/dist/. .
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update: ${{ steps.timestamp.outputs.time }}"
-          git push origin HEAD:gh-pages
+          if git diff --cached --quiet; then
+            echo "No changes to deploy"
+          else
+            git commit -m "Update: ${{ steps.timestamp.outputs.time }}"
+            git push origin HEAD:gh-pages
+          fi

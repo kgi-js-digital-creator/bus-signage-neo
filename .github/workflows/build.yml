@@ -1,0 +1,49 @@
+name: Build Vite Project
+
+on:
+  workflow_call:
+    inputs:
+      BASE:
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BASE: ${{ inputs.BASE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Create xWER4
+        env:
+          ENV_1A: ${{ vars.ENV_1A }}
+          ENV_2A: ${{ vars.ENV_2A }}
+          ENV_2B: ${{ vars.ENV_2B }}
+          ENV_3A: ${{ vars.ENV_3A }}
+          ENV_3B: ${{ vars.ENV_3B }}
+        run: |
+          jq -cn \
+            --arg v1a "$(printf '%s' "$ENV_1A" | base64 -w 0)" \
+            --arg v2a "$(printf '%s' "$ENV_2A" | base64 -w 0)" \
+            --arg v2b "$(printf '%s' "$ENV_2B" | base64 -w 0)" \
+            --arg v3a "$(printf '%s' "$ENV_3A" | base64 -w 0)" \
+            --arg v3b "$(printf '%s' "$ENV_3B" | base64 -w 0)" \
+            '{
+              "1A": $v1a,
+              "2A": $v2a,
+              "2B": $v2b,
+              "3A": $v3a,
+              "3B": $v3b
+            }' |
+            base64 -w 0 > dist/xWER4
+      - name: Create .nojekyll
+        run: touch dist/.nojekyll
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
