@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import type { Body } from "../types/ResponseJson";
 import Description from "../components/Description";
