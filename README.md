@@ -10,12 +10,13 @@
 
 # 通学バス情報サイネージ用マニュアル
 
-
-
 これは通学バス情報サイネージ用の運用マニュアルです。ここでは各種URLパラメータの使用法、Node.jsとこのViteプロジェクトを編集してビルドできるようにするまでの手順を記しています。これが役に立つ機会が来ることを祈ります。
 
 ## Tailwind CSSについて
 このプロジェクトでは、従来の`bus-signage-neo`リポジトリから、`Tailwind CSS`を導入し、よりコードの記述性を高めています。`Tailwind CSS`の詳しい使い方は[Tailwind CSSの公式サイト](https://tailwindcss.com/)などを確認してください。
+
+## APIのURL及びTokenを変更する時
+APIのURL及びTokenに変更があった場合、本リポジトリの`Settings`→`Secrets and Variables`→`Actions`の`Repository variables`の項目にある値を変更することで変更できます。
 
 ## ルーティング（子ページ）について
 このプロジェクトでは`Github Pages`などの都合上、`HashRouter`と呼ばれるルーティング方式を利用しています。`HashRouter`では`example.com/child/a`ではなく`example.com/#/child/a`のように指定します。
