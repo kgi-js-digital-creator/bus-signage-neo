@@ -1,7 +1,18 @@
+import fetchWithRetry from "./fetchWithRetry";
+
+
 export async function statusCheck(): Promise<{ status: boolean; message: string; status_code: number }> {
   try {
-    const d = JSON.parse(atob(await (await fetch(`${import.meta.env.BASE_URL}xWER4`)).text()))
-    const response = await fetch(`${atob(d["3A"])}${atob("P3Rva2VuPQ==")}${atob(d["3B"])}`, { cache: "no-store" });
+    const dr = await fetchWithRetry(`${import.meta.env.BASE_URL}xWER4`);
+    if (!dr.ok) {
+      return {
+        status: false,
+        message: `システム障害が発生しています`,
+        status_code: dr.status,
+      };
+    }
+    const d = JSON.parse(atob(await dr.text()));
+    const response = await fetchWithRetry(`${atob(d["3A"])}${atob("P3Rva2VuPQ==")}${atob(d["3B"])}`, { cache: "no-store" });
     if (response.status === 200) {
       const responseJson = await response.json();
       if (responseJson.status === "200") {

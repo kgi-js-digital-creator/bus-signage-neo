@@ -1,6 +1,8 @@
 import type { Body } from "../types/ResponseJson";
+import fetchWithRetry from "./fetchWithRetry";
 import getTodayType from "./getTodayType";
 import mergeJson from "./mergeJson";
+
 
 async function fetchData(
   todayType: string,
@@ -9,7 +11,7 @@ async function fetchData(
   let status = "500";
   let statusMessage = "Internal Server Error";
   let timetable = {};
-  const d = JSON.parse(atob(await (await fetch(`${import.meta.env.BASE_URL}xWER4`)).text()));
+  const d = JSON.parse(atob(await (await fetchWithRetry(`${import.meta.env.BASE_URL}xWER4`)).text()));
   const baseURL = `${atob(d["2A"])}${atob("P3Rva2VuPQ==")}${atob(d["2B"])}`;
   let requestURL: string;
   if (type === "sch_temp") {
@@ -22,7 +24,7 @@ async function fetchData(
     requestURL = `${baseURL}&md=${type}_${todayType}`;
   }
   try {
-    const res = await fetch(requestURL, { cache: "no-store" });
+    const res = await fetchWithRetry(requestURL, { cache: "no-store" });
     if (!res.ok) {
       status = res.status.toString();
       statusMessage = res.statusText;
