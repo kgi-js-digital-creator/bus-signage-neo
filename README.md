@@ -1,9 +1,21 @@
+<div align="center">
+  <img src="./docs/images/icon.svg" width="200" height="200"/>
+  <h1>通学バス情報サイネージ</h1>
+</div>
+
+![dev workflow](https://github.com/kgi-js-digital-creator/bus-signage-neo/actions/workflows/deploy_dev.yml/badge.svg)
+![prod workflow](https://github.com/kgi-js-digital-creator/bus-signage-neo/actions/workflows/deploy_prod.yml/badge.svg)
+
+![screenshot](./docs/images/screenshot_1.png)
+
 # 通学バス情報サイネージ用マニュアル
+
+
 
 これは通学バス情報サイネージ用の運用マニュアルです。ここでは各種URLパラメータの使用法、Node.jsとこのViteプロジェクトを編集してビルドできるようにするまでの手順を記しています。これが役に立つ機会が来ることを祈ります。
 
 ## Tailwind CSSについて
-このプロジェクトでは、従来の`bus-signage-source`リポジトリから、`Tailwind CSS`を導入し、よりコードの記述性を高めています。`Tailwind CSS`の詳しい使い方は[Tailwind CSSの公式サイト](https://tailwindcss.com/)などを確認してください。
+このプロジェクトでは、従来の`bus-signage-neo`リポジトリから、`Tailwind CSS`を導入し、よりコードの記述性を高めています。`Tailwind CSS`の詳しい使い方は[Tailwind CSSの公式サイト](https://tailwindcss.com/)などを確認してください。
 
 ## ルーティング（子ページ）について
 このプロジェクトでは`Github Pages`などの都合上、`HashRouter`と呼ばれるルーティング方式を利用しています。`HashRouter`では`example.com/child/a`ではなく`example.com/#/child/a`のように指定します。
@@ -41,53 +53,48 @@ https://kgi-js-digital-creator.github.io/bus-signage/?scale=0.8
 
 ## ファイル構造について
 ```plain
-bus-signage-source/
-├── public/                         # 外部公開ファイル
-│   ├── 404error/                   # 404エラーページ
-│   ├── 404.html                    # 404エラーページ本体
-│   └── favicon.svg                 # WEBアイコン
-├── src/                            # ソースコード
-│   ├── assets/                     # アセット
+bus-signage-neo/
+├── public/                           # ルートに置かれるファイル
+│   ├── 404.html                     # 404エラーページ本体
+│   ├── site.webmanifest             # サイトの設定ファイル
+│   └── favicon.svg                  # WEBアイコン
+├── src/                              # ソースコード
+│   ├── assets/                      # アセットフォルダ
+│   │   └── fonts/　                # フォントフォルダ
 │   ├── components/
 │   │   ├── BarText.tsx             # ヘッダー用コンポーネント
-│   │   ├── BarText.css
 │   │   ├── Description.tsx         # 停留所説明用コンポーネント
-│   │   ├── Description.css
+│   │   ├── Error.tsx               # エラー表示用コンポーネント
+│   │   ├── ErrorBoundary.tsx       # エラー検出用コンポーネント
 │   │   ├── Load.tsx                # 読み込み表示用コンポーネント
-│   │   ├── Load.css
-│   │   ├── Timetable.tsx           # 各行先ごとの時刻表用コンポーネント
-│   │   └── Timetable.css
-│   ├── constants/
-│   │   └── CONSTANTS.ts            # TokenやAPIのURLなど
+│   │   └── Timetable.tsx           # 各行先ごとの時刻表用コンポーネント
+│   ├── context/                     # 未使用
+│   ├── hooks/                       # 未使用
 │   ├── pages/
-│   │   ├── Debug.tsx               # デバッグ用ページ
+│   │   ├── Home.tsx                # ホームページ
 │   │   └── NotFound.tsx            # 404エラーページ
 │   ├── types/
 │   │   └── ResponseJson.ts         # レスポンスJSONの型
 │   ├── utils/
 │   │   ├── checkStatus.ts          # 表示許可確認
-│   │   ├── getTodayDate.ts         # yy-mm-dd
-│   │   ├── getTodayTimestamp.ts    # yy/mm/dd
-│   │   ├── getTodayType.ts         # 月曜～金曜(week)/土曜(sat)/祝日(holi)を判定
+│   │   ├── getTodayType.ts         # 月～金(week)/土(sat)/日・祝(holi)を判定
 │   │   ├── mergeJson.ts            # Jsonのディープマージ
 │   │   └── timetableData.ts        # 時刻表データの取得
-│   ├── App.tsx                     # アプリケーション本体
-│   ├── App.css
-│   ├── ErrorBoundary.tsx           # エラー時に表示するコンポーネント
-│   ├── ErrorBOundary.css
-│   ├── GlobalController.tsx        # offlineや表示中止の表示、定期リロードやURLパラメータ処理など
-│   ├── index.css                   # index.htmlのスタイル
-│   └── main.tsx                    # メインコンポーネント
-├── .gitignore                      # Gitの無視するファイル
-├── eslint.config.js                # ESLintの設定ファイル
-├── index.html                      # リダイレクト用
-├── package-lock.json               # インストールされた依存関係の確定情報
-├── package.json                    # パッケージ管理
+│   ├── App.tsx                      # アプリケーション本体
+│   ├── GlobalController.tsx         # offlineや表示中止の表示、定期リロード処理など
+│   ├── index.css                    # スタイル
+│   └── main.tsx                     # メインコンポーネント
+├── .gitignore                        # Gitの無視するファイル
+├── eslint.config.js                  # ESLintの設定ファイル
+├── index.html                        # リダイレクト用
+├── package-lock.json                 # インストールされた依存関係の確定情報
+├── package.json                      # パッケージ管理
 ├── README.md
-├── tsconfig.app.json               # TypeScript設定ファイル
-├── tsconfig.json                   # TypeScriptプロジェクトの全体的な設定の管理
-├── tsconfig.node.json              # Node.js用TypeScript設定ファイル
-└── vite.config.js                  # Viteの設定
+├── tsconfig.app.json                 # TypeScript設定ファイル
+├── tsconfig.json                     # TypeScriptプロジェクトの全体的な設定の管理
+├── tsconfig.node.json                # Node.js用TypeScript設定ファイル
+└── vite.config.js                    # Viteの設定
+
 ```
 
 ## Viteプロジェクトのセットアップ方法・編集方法
@@ -114,26 +121,29 @@ Github上のリポジトリからソースコードをダウンロードしま�
 #### gitのcloneコマンドを使用する
 PCにgitをインストールし、以下のコマンドを実行します。
 ```sh
-git clone https://github.com/kgi-js-digital-creator/bus-signage-source.git
+git clone https://github.com/kgi-js-digital-creator/bus-signage-neo.git
 ```
 
 #### Github Desktopを使用する
-https://github.com/kgi-js-digital-creator/bus-signage-source
+https://github.com/kgi-js-digital-creator/bus-signage-neo
 
 [GitHub Desktop](https://desktop.github.com/)をインストール後、上記のURLへアクセスし、右上の緑色の`Code`ボタンを押して、`Open in GitHub Desktop`を選択します。
 
 #### github.comからzipファイルをダウンロードする(非推奨)
-https://github.com/kgi-js-digital-creator/bus-signage-source
+https://github.com/kgi-js-digital-creator/bus-signage-neo
 
 上記のURLへアクセスし、右上の緑色の`Code`ボタンを押して、`Download ZIP`を選択します。
 
 ### ターミナルでプロジェクトへ移動する
-`cd`コマンドを実行し、`bus-signage-source/`フォルダの中に移動してください。
+`cd`コマンドを実行し、`bus-signage-neo/`フォルダの中に移動してください。
 
 例：
 ```sh
-cd [bus-signage-source/のフォルダパス]
+cd [bus-signage-neo/のフォルダパス]
 ```
+
+### xWER4ファイルを配置する
+GitHub上の`bus-signage-neo`などの`gh-pages`ブランチにある`xWER4`というファイルを`public/`フォルダにコピーしてください。
 
 ### node_modulesをインストールする
 package.json を元に必要なライブラリをインストールします。
@@ -145,7 +155,7 @@ node_modulesが入っていない場合、処理に数分かかることがあ�
 これで準備は完了です。
 
 ## 各種コマンド
-> これらのコマンドはviteプロジェクトのルートディレクトリ(`bus-signage-source/`)で実行する必要があります。
+> これらのコマンドはviteプロジェクトのルートディレクトリ(`bus-signage-neo/`)で実行する必要があります。
 
 ### プロジェクトにパッケージを追加する
 ```sh
@@ -174,4 +184,4 @@ npm run build
 このコマンドを実行すると、現在のプロジェクトをビルドすることが出来ます。出力結果はプロジェクトのルートディレクトリ内の`dist/`フォルダに生成されます。
 
 ### その他
-その他のコマンドなどは[npm Docs](https://docs.npmjs.com/)などを確認してください。`npm run [script名]`で実行するものは`package.json`の`"scripts"`を確認してください。
+その他のコマンドなどは[npm Docs](https://docs.npmjs.com/)などを確認してください。`npm run [script名]`で実行するものは`package.json`の`"scripts"`セクションを参照してください。
