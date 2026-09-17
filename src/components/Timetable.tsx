@@ -12,7 +12,7 @@ function remainingMinutes(timeNumber: string | number, nowTime: number) {
   if (time.length != 4 || !testRegex.test(time)) {
     if (!loggedInvalidTimes.has(time)) {
       loggedInvalidTimes.add(time);
-      console.log(`時刻データが不正です: ${timeNumber}\nデータは４桁の整数値である必要があります。`);
+      console.log(`時刻データが不正です: ${timeNumber}\nデータは4桁の整数値である必要があります。`);
     }
     return null;
   }
