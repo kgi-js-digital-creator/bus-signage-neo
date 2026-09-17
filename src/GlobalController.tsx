@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { statusCheck } from "./utils/checkStatus";
+import { checkStatus } from "./utils/checkStatus";
 import { GlobeOff } from "lucide-react";
 
 const checkInterval = 10 * 60 * 1000;
@@ -61,7 +61,7 @@ export function GlobalController({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const allowView = async () => {
-      const result = await statusCheck();
+      const result = await checkStatus();
       if (result.status) {
         setStatus((prevStatus) => {
           if (prevStatus === false) {

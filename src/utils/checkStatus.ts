@@ -1,7 +1,7 @@
 import fetchWithRetry from "./fetchWithRetry";
 
 
-export async function statusCheck(): Promise<{ status: boolean; message: string; status_code: number }> {
+export async function checkStatus(): Promise<{ status: boolean; message: string; status_code: number }> {
   try {
     const dr = await fetchWithRetry(`${import.meta.env.BASE_URL}xWER4`);
     if (!dr.ok) {

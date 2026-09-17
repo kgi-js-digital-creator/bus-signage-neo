@@ -10,7 +10,7 @@ export interface ErrorProps {
 export default function ErrorComponent({ error, errorInfo }: ErrorProps) {
   const now = new Date();
 
-  const [ariseTime] = useState(() => now.toLocaleString("ja-JP", {
+  const [errorTime] = useState(() => now.toLocaleString("ja-JP", {
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
@@ -58,7 +58,7 @@ export default function ErrorComponent({ error, errorInfo }: ErrorProps) {
           エラーが発生しました
         </h1>
         <div className="text-xl text-neutral-400 font-mono">
-          発生時刻: {ariseTime}
+          発生時刻: {errorTime}
         </div>
         <div className="m-4 text-left">
           <pre className="p-5 rounded-xl bg-neutral-900/90 border border-neutral-800 text-red-300 font-mono text-xs break-all whitespace-pre-wrap max-h-[65vh] overflow-auto select-text leading-relaxed">

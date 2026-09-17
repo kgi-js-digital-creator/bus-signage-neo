@@ -4,27 +4,27 @@ interface JObject {
 }
 
 //メイン関数部分JSONオブジェクトをArrayで渡す
-export default function mergeJson(json_list: Array<object>): object {
+export default function mergeJson(jsonList: Array<object>): object {
   //新規JObjectを宣言
   let result: JObject = {};
   //渡されたJSONすべてに順次処理
-  json_list.forEach((json) => {
-    result = push_object(result, json as JObject);
+  jsonList.forEach((json) => {
+    result = pushObject(result, json as JObject);
   });
   return result;
 }
 
 //オブジェクト結合部分、結合先のJObjectと結合したいJSONをJObjectとして渡す
-function push_object(baseObj: JObject, obj: JObject): JObject {
+function pushObject(baseObj: JObject, obj: JObject): JObject {
   //結合先のコピーを宣言
   const result: JObject = { ...baseObj };
   //結合先がすでに持っているキーをリスト化
-  const has_key = Object.keys(baseObj);
+  const hasKey = Object.keys(baseObj);
 
   //結合したいオブジェクトのアイテムに順次処理
   Object.entries(obj).forEach((entry) => {
     //アイテムのキーがすでに存在するかで分岐
-    if (!has_key.includes(entry[0])) {
+    if (!hasKey.includes(entry[0])) {
       //キーを持たない場合オブジェクト型ならばJObjectに変換して代入、そうでなければそのまま代入
       if (typeof entry[1] === "object" && !Array.isArray(entry[1])) {
         result[entry[0]] = entry[1] as JObject;
@@ -46,7 +46,7 @@ function push_object(baseObj: JObject, obj: JObject): JObject {
         typeof result[entry[0]] === "object" &&
         !Array.isArray(result[entry[0]])
       ) {
-        result[entry[0]] = push_object(
+        result[entry[0]] = pushObject(
           result[entry[0]] as JObject,
           entry[1] as JObject,
         );

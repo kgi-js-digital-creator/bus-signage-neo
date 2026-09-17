@@ -1,12 +1,12 @@
 import { HashRouter, Route, Routes, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import type { Body } from "./types/ResponseJson.ts";
-import Timetable from "./components/Timetable.tsx";
-import Load from "./components/Load.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import type { Body } from "./types/ResponseJson";
+import Timetable from "./components/Timetable";
+import Load from "./components/Load";
+import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import timetableData from "./utils/timetableData.ts";
+import timetableData from "./utils/timetableData";
 
 
 export default function App() {

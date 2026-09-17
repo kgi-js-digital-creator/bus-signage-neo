@@ -7,7 +7,7 @@ export interface ResponseJson {
 
 export interface Body {
   metadata: Metadata;
-  routes: Record<string, Routes>;
+  routes: Record<string, Route>;
 }
 
 interface Metadata {
@@ -26,7 +26,7 @@ interface Status {
   status_msg: string;
 }
 
-interface Routes {
+interface Route {
   stop: string;
   line: string;
   name: string;

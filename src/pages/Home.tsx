@@ -9,9 +9,9 @@ import Load from "../components/Load";
 
 export default function Home({ timetable, isLoading }: { timetable?: Body, isLoading: boolean }) {
   const [now, setNow] = useState(new Date());
-  
+
   useEffect(() => {
-	  let timerId: ReturnType<typeof setTimeout>;
+    let timerId: ReturnType<typeof setTimeout>;
 
     function updateNow() {
       const currentTime = new Date();

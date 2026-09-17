@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import "./index.css";
 import App from "./App";
-import { GlobalController } from "./GlobalController.tsx";
+import { GlobalController } from "./GlobalController";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 
