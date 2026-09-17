@@ -65,7 +65,7 @@ export function GlobalController({ children }: { children: React.ReactNode }) {
       if (result.status) {
         setStatus((prevStatus) => {
           if (prevStatus === false) {
-            location.reload();
+            window.location.reload();
           }
           return true;
         });
