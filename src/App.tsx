@@ -13,13 +13,17 @@ export default function App() {
   const [timetable, setTimetable] = useState<Body>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-
-
   useEffect(() => {
     const init = async () => {
-      const data = await timetableData();
-      setTimetable(data);
-      setIsLoading(false);
+      try {
+        const data = await timetableData();
+        setTimetable(data);
+      } catch (error) {
+        console.error("時刻表データの取得に失敗しました:", error);
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
     }
     init();
   }, [])
