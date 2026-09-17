@@ -7,7 +7,7 @@ export default function NotFound() {
   useEffect(() => {
     const path = location.pathname + location.search;
     const url = encodeURIComponent(path);
-    window.location.replace(`/404.html?url=${url}`);
+    window.location.replace(`${import.meta.env.BASE_URL}404.html?url=${url}`);
   }, [location]);
 
   return null;
