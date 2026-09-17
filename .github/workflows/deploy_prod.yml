@@ -34,6 +34,7 @@ jobs:
           name: dist
           path: deploy/
       - name: Push to repository
+        working-directory: deploy
         run: |
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
