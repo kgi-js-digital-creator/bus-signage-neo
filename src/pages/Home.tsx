@@ -23,11 +23,11 @@ export default function Home({ timetable, isLoading }: { timetable?: Body, isLoa
   }, []);
   return (
     <>
-      <header className="flex shrink-0 flex-row w-full h-22 px-4 justify-between text-5xl items-center bg-neutral-800">
-        <div className="font-normal">
+      <header className="flex shrink-0 flex-row w-full h-22 px-4 gap-4 justify-between text-5xl items-center bg-neutral-800">
+        <div className="flex-1 min-w-0 font-normal">
           {isLoading || !timetable ? <>読み込み中...</> : <BarText data={timetable} />}
         </div>
-        <div className="font-medium">
+        <div className="w-fit shrink-0 whitespace-nowrap font-medium">
           {
             Intl.DateTimeFormat("ja-JP", {
               month: "numeric",

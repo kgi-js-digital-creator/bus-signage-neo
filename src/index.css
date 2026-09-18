@@ -18,6 +18,28 @@ body,
   font-synthesis: none;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% - var(--marquee-gap, 1rem)));
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.mask-marquee {
+  mask-image: linear-gradient(to right, transparent 0%, black 4rem, black calc(100% - 4rem), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4rem, black calc(100% - 4rem), transparent 100%);
+}
+
 @keyframes shimmer-global {
   0% {
     background-position: -200vw 0;
