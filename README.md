@@ -3,8 +3,12 @@
   <h1>通学バス情報サイネージ</h1>
 </div>
 
+<div align="right">
+
 ![dev workflow](https://github.com/kgi-js-digital-creator/bus-signage-neo/actions/workflows/deploy_dev.yml/badge.svg)
 ![prod workflow](https://github.com/kgi-js-digital-creator/bus-signage-neo/actions/workflows/deploy_prod.yml/badge.svg)
+
+</div>
 
 ![screenshot](./docs/images/screenshot_1.png)
 
