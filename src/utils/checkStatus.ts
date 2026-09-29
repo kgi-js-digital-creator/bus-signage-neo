@@ -44,3 +44,12 @@ export async function checkStatus(): Promise<{ status: boolean; message: string;
     };
   }
 }
+
+// ステータス確認無効化
+// export async function checkStatus(): Promise<{ status: boolean; message: string; status_code: number }> {
+//   return {
+//     status: true,
+//     message: "OK",
+//     status_code: 200,
+//   };
+// }
