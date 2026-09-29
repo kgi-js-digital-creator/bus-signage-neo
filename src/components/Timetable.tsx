@@ -40,7 +40,8 @@ export default function Timetable({ id, data }: { id: string; data: Body }) {
     return () => clearInterval(timer);
   }, []);
 
-  const busType = schoolBusIds.includes(id) ? "school" : "public";
+  const isSchoolBus = schoolBusIds.includes(id);
+  const busType = isSchoolBus ? "school" : "public";
   const statusObj = data?.metadata?.statuses?.[busType];
 
   const stopName = data?.routes?.[id]?.stop ?? id;
@@ -53,8 +54,14 @@ export default function Timetable({ id, data }: { id: string; data: Body }) {
         <div className="flex flex-row items-center shrink-0 w-full gap-4 py-1">
           <div className="flex text-[2rem] text-center font-medium text-neutral-200">{stopName}</div>
           <div className="flex flex-col justify-end h-full font-medium text-neutral-300">
-            <div className="text-[0.8rem]">{lineName}</div>
-            <div className="text-base">{routeName}</div>
+            {isSchoolBus ? (
+              <div className="text-base">Fizz</div>
+            ) : (
+              <>
+                <div className="text-[0.8rem]">{lineName}</div>
+                <div className="text-base">{routeName}</div>
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-1 w-full flex-col min-h-0 overflow-hidden">
@@ -75,15 +82,42 @@ export default function Timetable({ id, data }: { id: string; data: Body }) {
       return remaining !== null && remaining > 0;
     }) ?? [];
 
+  const lastBus = remainingTimetable[remainingTimetable.length - 1];
+  const lastTime = lastBus?.[0];
+  const lastRemaining = lastTime ? remainingMinutes(lastTime, currentTime) : null;
+
   return (
     <>
       <div className="relative flex flex-col flex-1 px-2 min-h-0 items-center overflow-hidden">
         <div className="flex flex-row items-center shrink-0 w-full gap-4 py-1">
           <div className="flex text-[2rem] text-center font-medium text-neutral-200">{stopName}</div>
-          <div className={`flex flex-col h-8 font-medium text-neutral-300 gap-1 ${lineName && routeName ? "justify-center" : "justify-end"}`}>
-            <div className="text-[0.8rem] leading-none">{lineName}</div>
-            <div className="text-base leading-none">{routeName}</div>
-          </div>
+          {isSchoolBus ? (
+            <div className="flex flex-1 flex-col justify-center items-end font-medium text-neutral-300">
+              <div className="flex flex-col items-start">
+                <div className="text-base leading-none text-neutral-100">最終便</div>
+                {lastTime && (
+                  <div className="flex flex-row text-xl leading-none items-center gap-2 border-b-2 border-neutral-400/50">
+                    <div className="text-[#e74c3c] font-bold">{`${String(lastTime).slice(0, 2)}:${String(lastTime).slice(2)}`}</div>
+                    {lastRemaining !== null && lastRemaining > 0 && (
+                      <div className="text-base">
+                        あと
+                        {lastRemaining >= 60
+                          ? lastRemaining % 60 === 0
+                            ? `${Math.floor(lastRemaining / 60)}時間`
+                            : `${Math.floor(lastRemaining / 60)}時間${lastRemaining % 60}分`
+                          : `${lastRemaining}分`}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className={`flex flex-1 flex-col h-8 font-medium text-neutral-300 gap-1 ${lineName && routeName ? "justify-center" : "justify-end"}`}>
+              <div className="text-[0.8rem] leading-none">{lineName}</div>
+              <div className="text-base leading-none">{routeName}</div>
+            </div>
+          )}
         </div>
         <div className="flex flex-1 w-full flex-col min-h-0 overflow-hidden">
           {remainingTimetable.length === 0 ? (
@@ -94,7 +128,6 @@ export default function Timetable({ id, data }: { id: string; data: Body }) {
                 const remaining =
                   index <= 1 ? remainingMinutes(time, currentTime) : null;
                 const isLast = index === remainingTimetable.length - 1;
-
                 return (
                   <div
                     key={index}
