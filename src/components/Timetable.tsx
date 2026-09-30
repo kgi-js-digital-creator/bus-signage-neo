@@ -54,14 +54,8 @@ export default function Timetable({ id, data }: { id: string; data: Body }) {
         <div className="flex flex-row items-center shrink-0 w-full gap-4 py-1">
           <div className="flex text-[2rem] text-center font-medium text-neutral-200">{stopName}</div>
           <div className="flex flex-col justify-end h-full font-medium text-neutral-300">
-            {isSchoolBus ? (
-              <div className="text-base">Fizz</div>
-            ) : (
-              <>
-                <div className="text-[0.8rem]">{lineName}</div>
-                <div className="text-base">{routeName}</div>
-              </>
-            )}
+            <div className="text-[0.8rem]">{lineName}</div>
+            <div className="text-base">{routeName}</div>
           </div>
         </div>
         <div className="flex flex-1 w-full flex-col min-h-0 overflow-hidden">
