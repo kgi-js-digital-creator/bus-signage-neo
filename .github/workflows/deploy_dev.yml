@@ -3,6 +3,9 @@ name: Deploy development gh-pages
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 concurrency:
   group: deploy-dev
