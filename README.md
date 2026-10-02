@@ -73,8 +73,6 @@ bus-signage-neo/
 │   │   ├── ErrorBoundary.tsx       # エラー検出用コンポーネント
 │   │   ├── Load.tsx                # 読み込み表示用コンポーネント
 │   │   └── Timetable.tsx           # 各行先ごとの時刻表用コンポーネント
-│   ├── context/                     # 未使用
-│   ├── hooks/                       # 未使用
 │   ├── pages/
 │   │   ├── Home.tsx                # ホームページ
 │   │   └── NotFound.tsx            # 404エラーページ
