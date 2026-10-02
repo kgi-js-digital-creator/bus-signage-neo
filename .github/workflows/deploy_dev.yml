@@ -6,6 +6,8 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/**'
+      - 'public/**'
+      - 'index.html'
   workflow_dispatch:
 concurrency:
   group: deploy-dev
