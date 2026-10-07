@@ -60,6 +60,11 @@ export function GlobalController({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("statusCheck")?.toLowerCase() === "false") {
+      return;
+    }
+
     const allowView = async () => {
       const result = await checkStatus();
       if (result.status) {

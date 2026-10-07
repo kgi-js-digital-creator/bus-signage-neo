@@ -50,6 +50,7 @@ APIのURL及びTokenに変更があった場合、本リポジトリの`Settings
 | key | 初期値 | value | 役割 |
 | --- | --- | --- | --- |
 | scale | 1.0 | float | 全体の表示サイズを調節します |
+| statusCheck | true | boolean | 表示中止の判定をスキップします。表示を強制的に許可します |
 
 使用例：
 ```url
